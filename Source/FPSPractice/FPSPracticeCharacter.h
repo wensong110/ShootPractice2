@@ -35,6 +35,34 @@ public:
 	FHitResult BulletTrance(const FVector& FromLocation);
 	UFUNCTION(BlueprintCallable)
 	void DrawPreviewLine(const FVector& FromLocation, const FVector& Velocity, float gravity,int n=980);
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFireDown();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnJumpDown();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoomDown();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFireUp();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnJumpUp();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCamTurnDown();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCamTurnUp();
+	void ProcessTouch(ETouchIndex::Type FingerIndex, FVector Location,bool bDown);
+	FVector2D ScreenSize;
+	void BeginPlay() override;
+	struct FingerRecord
+	{
+		ETouchIndex::Type Fire_Index;
+		ETouchIndex::Type Jump_Index;
+		ETouchIndex::Type Boom_Index;
+		ETouchIndex::Type CamTurn_Index;
+		bool bFireDown=0;
+		bool bJumpDown=0;
+		bool bBoomDown=0;
+		bool bCamTurnDown=0;
+	}fingerRecord;
 	struct FTouchItem
 	{
 		bool bIsPressed;
@@ -88,3 +116,8 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
 
+inline void AFPSPracticeCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	GWorld->GetGameViewport()->GetViewportSize(ScreenSize);
+}
