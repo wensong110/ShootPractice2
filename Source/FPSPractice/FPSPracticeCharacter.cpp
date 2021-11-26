@@ -227,7 +227,7 @@ void AFPSPracticeCharacter::TouchUpdate(ETouchIndex::Type FingerIndex, FVector L
 	const FVector2D Move=FVector2D(Location.X-TouchItem.Location.X,Location.Y-TouchItem.Location.Y);
 	if(FMath::Abs(Move.X)>0||FMath::Abs(Move.Y)>0)
 	{
-	    if(FMath::Abs(Move.X)<4||FMath::Abs(Move.Y)<4)
+	    if(FMath::Abs(Move.X)<4&&FMath::Abs(Move.Y)<4)
 		TouchItem.bMoved=true;
 		LookUpAtRate(Move.Y*0.05);
 		TurnAtRate(Move.X*0.05);
